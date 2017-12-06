@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace T4TCase.Model
@@ -27,7 +24,7 @@ namespace T4TCase.Model
         public string City { get; set; }
 
 
-        public User user { get; set; }
+       // public User user { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 }

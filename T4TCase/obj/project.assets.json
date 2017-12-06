@@ -10898,11 +10898,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\flori\\OneDrive\\Documents\\T4TCase\\T4TCase\\T4TCase\\T4TCase.csproj",
+      "projectUniqueName": "C:\\Users\\flori\\OneDrive\\Documents\\T4TCase\\T4TCase\\T4TCase.csproj",
       "projectName": "T4TCase",
-      "projectPath": "C:\\Users\\flori\\OneDrive\\Documents\\T4TCase\\T4TCase\\T4TCase\\T4TCase.csproj",
+      "projectPath": "C:\\Users\\flori\\OneDrive\\Documents\\T4TCase\\T4TCase\\T4TCase.csproj",
       "packagesPath": "C:\\Users\\flori\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\flori\\OneDrive\\Documents\\T4TCase\\T4TCase\\T4TCase\\obj\\",
+      "outputPath": "C:\\Users\\flori\\OneDrive\\Documents\\T4TCase\\T4TCase\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\flori\\AppData\\Roaming\\NuGet\\NuGet.Config",

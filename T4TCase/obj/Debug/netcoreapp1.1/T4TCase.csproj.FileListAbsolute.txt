@@ -9,3 +9,14 @@ C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\T4TCase\obj\Debug\netcoreapp1.
 C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.AssemblyInfo.cs
 C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.dll
 C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.pdb
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.csproj.CoreCompileInputs.cache
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.AssemblyInfoInputs.cache
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.AssemblyInfo.cs
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.dll
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.pdb
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\bin\Debug\netcoreapp1.1\T4TCase.deps.json
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\bin\Debug\netcoreapp1.1\T4TCase.runtimeconfig.json
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\bin\Debug\netcoreapp1.1\T4TCase.runtimeconfig.dev.json
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\bin\Debug\netcoreapp1.1\T4TCase.dll
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\bin\Debug\netcoreapp1.1\T4TCase.pdb
+C:\Users\flori\OneDrive\Documents\T4TCase\T4TCase\obj\Debug\netcoreapp1.1\T4TCase.csprojResolveAssemblyReference.cache
