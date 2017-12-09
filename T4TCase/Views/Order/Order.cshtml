@@ -1,0 +1,39 @@
+﻿@using T4TCase.ViewModel
+@model OrderViewModel
+
+
+    <h1>Order Page</h1>
+@using (Html.BeginForm())
+{
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>Naam</th>
+                    <th>Info</th>
+                    <th>Aantal</th>
+                    <th>Prijs</th>
+                </tr>
+            </thead>
+            <tbody>
+               @for (int i = 0; i < Model.itemvms.Count(); i++)
+               {
+                @Html.HiddenFor(model => Model.itemvms[i].ItemID)
+                @Html.HiddenFor(model => Model.itemvms[i].Name)
+                @Html.HiddenFor(model => Model.itemvms[i].Description)
+                @Html.HiddenFor(model => Model.itemvms[i].Price)
+                    <tr>      
+                        <td>@Html.DisplayFor(model => Model.itemvms[i].Name)</td>
+                        <td>@Html.DisplayFor(model => Model.itemvms[i].Description)</td>
+                        <td>@Html.TextBoxFor(model => Model.itemvms[i].Aantal)
+                            @Html.ValidationMessageFor(model => Model.itemvms[i].Aantal)</td>                     
+                        <td> @Html.DisplayFor(model => Model.itemvms[i].Price) </td>
+                    </tr>
+               }
+
+            </tbody>
+        </table>
+    </div>
+    <input type = "submit" value = "Order" />
+}

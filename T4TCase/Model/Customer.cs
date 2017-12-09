@@ -23,6 +23,8 @@ namespace T4TCase.Model
         [Required]
         public string City { get; set; }
 
+        public string UserName { get; set; }
+
 
        // public User user { get; set; }
         public ICollection<Order> Orders { get; set; }

@@ -18,7 +18,10 @@
         <label asp-for="RememberMe"></label>
         <input asp-for="RememberMe" />
     </div>
-    <div><input type="submit" value="Login" /></div>
+    <div>
+        <p><input type="submit" value="Login" /></p>
+        <p><a asp-action="Register">Register</a></p>
+    </div>
 </form>
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
