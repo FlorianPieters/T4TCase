@@ -14,7 +14,7 @@ namespace T4TCase.Model
         public int Age { get; set; }
         [Required]
         [EmailAddress]
-        public string Mail { get; set; }
+        public string Email { get; set; }
         [Required]
         public string Address { get; set; }
         [Required]

@@ -17,12 +17,12 @@ namespace T4TCase.Controllers
     public class OrderController : Controller
     {
         private readonly DatabaseContext _context;
-        private readonly UserManager<User> _userManager;
+       // private readonly UserManager<User> _userManager;
 
-        public OrderController(DatabaseContext context, UserManager<User> userManager)
+        public OrderController(DatabaseContext context)
         {
             _context = context;
-            _userManager = userManager;
+           // _userManager = userManager;
         }
 
         // GET: /<controller>/
@@ -42,7 +42,7 @@ namespace T4TCase.Controllers
             var Ordervm = new OrderViewModel();
             if (User.Identity.IsAuthenticated)
             {
-                var user = _context.Customer.First(x => x.UserName == User.Identity.Name);
+                var user =_context.Customer.First(x => x.UserName == User.Identity.Name);                
                 Ordervm = new OrderViewModel { itemvms = ItemList, customer = user };
             }
             else
@@ -54,11 +54,71 @@ namespace T4TCase.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Order(OrderViewModel Ordervm)
+        public async Task<ActionResult> Confirm(OrderViewModel Ordervm)
         {
-            
+            var customer = new Customer();
+            if (User.Identity.IsAuthenticated)
+            {
+              customer = _context.Customer.First(x => x.UserName == User.Identity.Name);
+              Compare(customer, Ordervm.customer);
 
+            }
+            else
+            {
+                customer = Ordervm.customer;
+            }
+
+            decimal TotalPrice = 0;
+            foreach (var item in Ordervm.itemvms)
+            {
+                if (item.Aantal > 0)
+                {
+                    decimal Price = System.Convert.ToDecimal(item.Price);
+                    Price = Price * item.Aantal;
+                    TotalPrice += Price;
+                }
+            }
+
+            var order = new Order { Customer = customer, Date = System.DateTimeOffset.Now, Description = Ordervm.description, TotalPrice = TotalPrice};
+            _context.Order.Add(order);
+            _context.SaveChanges();
+
+            foreach (var item in Ordervm.itemvms)
+            {
+                if (item.Aantal > 0)
+                {
+                    var test = order.OrderID;
+                    _context.OrderItem.Add(new OrderItem { OrderID = order.OrderID, ItemID = item.ItemID, Amount = item.Aantal });
+                }
+            }
+            _context.SaveChanges();
+
+            
             return View(Ordervm);
+        }
+
+
+        public void Compare(Customer a, Customer b)
+        {
+            if (a.LastName != b.LastName
+                || a.FirstName != b.FirstName
+                || a.Email != b.Email
+                || a.PhoneNumer != b.PhoneNumer
+                || a.Age != b.Age
+                || a.Address != b.Address
+                || a.City != b.City)
+            {
+                var customer = _context.Customer.First(x => x.UserName == a.UserName);
+                customer.LastName = b.LastName;
+                customer.FirstName = b.FirstName;
+                customer.Email = b.Email;
+                customer.PhoneNumer = b.PhoneNumer;
+                customer.Age = b.Age;
+                customer.Address = b.Address;
+                customer.City = b.City;
+                _context.SaveChanges();
+              
+            }          
         }
     }
 }

@@ -60,7 +60,18 @@ namespace T4TCase.Controllers
             {
                 var user = new User { UserName = vm.UserName, Email = vm.Email };
                 var result = await _userManager.CreateAsync(user, vm.Password);
-
+                _context.Customer.Add(new Customer
+                {
+                    UserName = vm.UserName,
+                    LastName = vm.LastName,
+                    FirstName = vm.FirstName,
+                    Email = vm.Email,
+                    Age = vm.Age,
+                    PhoneNumer = vm.PhoneNumer,
+                    Address = vm.Address,
+                    City = vm.City
+                });
+                _context.SaveChanges();
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
@@ -77,6 +88,14 @@ namespace T4TCase.Controllers
 
             }
             return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<RedirectToActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Login", "Login");
         }
     }
 }
