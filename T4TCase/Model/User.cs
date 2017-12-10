@@ -14,7 +14,6 @@ namespace T4TCase.Model
      //   [Required]
      //   [EmailAddress]
      //   public string Mail { get; set; }
-     //   public int CustomerID { get; set; }
 
 
       //  public Customer Customer { get; set; }

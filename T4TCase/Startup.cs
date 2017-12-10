@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using T4TCase.Data;
 using T4TCase.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace T4TCase
@@ -44,7 +45,7 @@ namespace T4TCase
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context, UserManager<User> userManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -68,7 +69,7 @@ namespace T4TCase
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
-            DBInitialize.Initialize(context);
+            DBInitialize.Initialize(context,userManager);
         }
     }
 }

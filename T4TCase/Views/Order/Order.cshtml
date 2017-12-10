@@ -1,0 +1,89 @@
+﻿@using T4TCase.ViewModel
+@model OrderViewModel
+@*@{ decimal TotalPrice = 0; }*@
+
+
+    <h1>Order Page</h1>
+@using (Html.BeginForm("Confirm", "Order"))
+{
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>Naam</th>
+                    <th>Info</th>
+                    <th>Aantal</th>
+                    <th>Prijs</th>
+                </tr>
+            </thead>
+            <tbody>
+               @for (int i = 0; i < Model.itemvms.Count(); i++)
+               {
+                @Html.HiddenFor(model => Model.itemvms[i].ItemID)
+                @Html.HiddenFor(model => Model.itemvms[i].Name)
+                @Html.HiddenFor(model => Model.itemvms[i].Description)
+                @Html.HiddenFor(model => Model.itemvms[i].Price)
+                    <tr>      
+                        <td>@Html.DisplayFor(model => Model.itemvms[i].Name)</td>
+                        <td>@Html.DisplayFor(model => Model.itemvms[i].Description)</td>
+                        <td>@Html.TextBoxFor(model => Model.itemvms[i].Aantal)
+                            @Html.ValidationMessageFor(model => Model.itemvms[i].Aantal)</td>                           
+                        <td> @Html.DisplayFor(model => Model.itemvms[i].Price) </td>
+                    </tr>
+
+                  // TotalPrice = @Html.Raw(Json.ToString(Model.itemvms[i].Aantal));
+
+               }
+
+            </tbody>
+        </table>
+        <div>
+            <div>
+                <label asp-for="description"></label>
+                <input asp-for="description" />
+                <span asp-validation-for="description"></span>
+            </div>
+        <div>
+            <label asp-for="customer.LastName"></label>
+            <input asp-for="customer.LastName" />
+            <span asp-validation-for="customer.LastName"></span>
+        </div>
+        <div>
+            <label asp-for="customer.FirstName"></label>
+            <input asp-for="customer.FirstName" />
+            <span asp-validation-for="customer.FirstName"></span>
+        </div>
+        <div>
+            <label asp-for="customer.Age"></label>
+            <input asp-for="customer.Age" />
+            <span asp-validation-for="customer.Age"></span>
+        </div>
+        <div>
+            <label asp-for="customer.Email"></label>
+            <input asp-for="customer.Email" />
+            <span asp-validation-for="customer.Email"></span>
+        </div>
+        <div>
+            <label asp-for="customer.PhoneNumer"></label>
+            <input asp-for="customer.PhoneNumer" />
+            <span asp-validation-for="customer.PhoneNumer"></span>
+        </div>
+        <div>
+            <label asp-for="customer.Address"></label>
+            <input asp-for="customer.Address" />
+            <span asp-validation-for="customer.Address"></span>
+        </div>
+        <div>
+            <label asp-for="customer.City"></label>
+            <input asp-for="customer.City" />
+            <span asp-validation-for="customer.City"></span>
+        </div>
+            </div>
+    </div>
+   // <p>Total price is @TotalPrice</p>
+   // Model.totalprice = TotalPrice;
+   
+
+    <input type = "submit" value = "Confirm" />
+}

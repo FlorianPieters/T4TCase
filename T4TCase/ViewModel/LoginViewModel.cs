@@ -19,5 +19,8 @@ namespace T4TCase.ViewModel
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
 
+
+
+
     }
 }
