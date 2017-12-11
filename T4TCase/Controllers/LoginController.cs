@@ -22,10 +22,10 @@ namespace T4TCase.Controllers
 
         public IActionResult Login()
         {
-           //var user = _context.User.First(x => x.UserName == "florian");
-
-           // _context.User.Remove(user);
-           // _context.SaveChanges();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Order", "Order");
+            }
 
             return View();
         }
@@ -39,9 +39,9 @@ namespace T4TCase.Controllers
                 var result = await _signInManager.PasswordSignInAsync(vm.UserName, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Order", "Order");
+                    return RedirectToAction("Order", "Order", vm);
                 }
-                ModelState.AddModelError("", "Wrong user information.");
+                ModelState.AddModelError("", "Plz select atleast 1 item");
             }
             return View(vm);
         }

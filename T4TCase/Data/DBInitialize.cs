@@ -32,10 +32,10 @@ namespace T4TCase.Data
                 );
 
             context.Item.AddRange(
-                new Item { Name = "Broodje Kaas", Description = "Broodje met kaas", Price = "2,00" },
-                new Item { Name = "Broodje Hesp", Description = "Broodje met hesp", Price = "2,00" },
-                new Item { Name = "Broodje Kaashesp", Description = "Broodje met kaas en hesp", Price = "2,50" },
-                new Item { Name = "Broodje Martino", Description = "Broodje met preparé, augurken, ajuin en martino saus", Price = "2,50" }
+                new Item { Name = "Broodje Kaas", Description = "Broodje met kaas", Price = 2 },
+                new Item { Name = "Broodje Hesp", Description = "Broodje met hesp", Price = 2 },
+                new Item { Name = "Broodje Kaashesp", Description = "Broodje met kaas en hesp", Price = 2.5m },
+                new Item { Name = "Broodje Martino", Description = "Broodje met preparé, augurken, ajuin en martino saus", Price = 2.5m }
                 );
             
         }

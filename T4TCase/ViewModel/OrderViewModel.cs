@@ -11,5 +11,8 @@ namespace T4TCase.ViewModel
         public List<ItemViewModel> itemvms { get; set; }
         public Customer customer { get; set; }
         public string description { get; set; }
+        public DateTime date { get; set; }
+        public decimal totalprice {get;set;}
+        
     }
 }
