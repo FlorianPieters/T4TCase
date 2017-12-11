@@ -1,0 +1,58 @@
+﻿@using T4TCase.ViewModel
+@model List<OrderListViewModel>
+
+<h1>Order Page</h1>
+@using (Html.BeginForm("Change", "ChangeOrder"))
+{
+
+
+        @foreach (var order in Model)
+        {
+
+            
+            <table>
+                <thead>
+                    <tr>
+
+                        <th>Naam</th>
+                        <th>Info</th>
+                        <th>Aantal</th>
+                        <th>Prijs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in order.itemvms)
+                    {
+                        @*@Html.HiddenFor(item =>item.ItemID)
+                            @Html.HiddenFor(model => Model.itemvms[i].Name)
+                            @Html.HiddenFor(model => Model.itemvms[i].Description)
+                            @Html.HiddenFor(model => Model.itemvms[i].Price)
+                            <tr>
+                                <td>@Html.DisplayFor(model => Model.itemvms[i].Name)</td>
+                                <td>@Html.DisplayFor(model => Model.itemvms[i].Description)</td>
+                                <td>
+                                    @Html.TextBoxFor(model => Model.itemvms[i].Aantal)
+                                    @Html.ValidationMessageFor(model => Model.itemvms[i].Aantal)
+                                </td>
+                                <td> @Html.DisplayFor(model => Model.itemvms[i].Price) </td>
+                            </tr>*@
+
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>@item.Aantal</td>
+                            <td>@item.Price</td>
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+            <br />
+            <div>
+                <p>Description: @order.description</p>
+                <p>Date: @order.date</p>
+                <p>Total price: @order.totalprice</p>
+            </div>
+        }
+}

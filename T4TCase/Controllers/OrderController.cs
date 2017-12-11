@@ -7,6 +7,7 @@ using T4TCase.ViewModel;
 using T4TCase.Model;
 using T4TCase.Data;
 using Microsoft.AspNetCore.Identity;
+using T4TCase.Method;
 
 
 
@@ -54,14 +55,24 @@ namespace T4TCase.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Confirm(OrderViewModel Ordervm)
+        public ActionResult Confirm(OrderViewModel Ordervm)
         {
+            int OrderItemAmount = 0;
+            foreach (var item in Ordervm.itemvms)
+            {
+                OrderItemAmount += item.Aantal;
+            }
+            if (OrderItemAmount <= 0)
+            {
+                return RedirectToAction("Order", "Order");
+          
+            ModelState.AddModelError("", "Wrong user information.");
+            }
             var customer = new Customer();
             if (User.Identity.IsAuthenticated)
             {
-              customer = _context.Customer.First(x => x.UserName == User.Identity.Name);
-              Compare(customer, Ordervm.customer);
-
+                customer = _context.Customer.First(x => x.UserName == User.Identity.Name);
+                Functions.CompareCustomer(_context, customer, Ordervm.customer);
             }
             else
             {
@@ -73,13 +84,13 @@ namespace T4TCase.Controllers
             {
                 if (item.Aantal > 0)
                 {
-                    decimal Price = System.Convert.ToDecimal(item.Price);
+                    decimal Price = item.Price;
                     Price = Price * item.Aantal;
                     TotalPrice += Price;
                 }
             }
 
-            var order = new Order { Customer = customer, Date = System.DateTimeOffset.Now, Description = Ordervm.description, TotalPrice = TotalPrice};
+            var order = new Order { Customer = customer, Date = System.DateTime.Now, Description = Ordervm.description, TotalPrice = TotalPrice};
             _context.Order.Add(order);
             _context.SaveChanges();
 
@@ -97,28 +108,5 @@ namespace T4TCase.Controllers
             return View(Ordervm);
         }
 
-
-        public void Compare(Customer a, Customer b)
-        {
-            if (a.LastName != b.LastName
-                || a.FirstName != b.FirstName
-                || a.Email != b.Email
-                || a.PhoneNumer != b.PhoneNumer
-                || a.Age != b.Age
-                || a.Address != b.Address
-                || a.City != b.City)
-            {
-                var customer = _context.Customer.First(x => x.UserName == a.UserName);
-                customer.LastName = b.LastName;
-                customer.FirstName = b.FirstName;
-                customer.Email = b.Email;
-                customer.PhoneNumer = b.PhoneNumer;
-                customer.Age = b.Age;
-                customer.Address = b.Address;
-                customer.City = b.City;
-                _context.SaveChanges();
-              
-            }          
-        }
     }
 }

@@ -9,7 +9,7 @@ namespace T4TCase.Model
         [Key]
         public int OrderID { get; set; }
         public int CustomerID { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
         public decimal TotalPrice { get; set; }
         public string Description { get; set; }
 

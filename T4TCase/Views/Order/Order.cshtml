@@ -4,6 +4,7 @@
 
 
     <h1>Order Page</h1>
+
 @using (Html.BeginForm("Confirm", "Order"))
 {
     <div>
@@ -38,6 +39,7 @@
 
             </tbody>
         </table>
+        <div>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</div>
         <div>
             <div>
                 <label asp-for="description"></label>
