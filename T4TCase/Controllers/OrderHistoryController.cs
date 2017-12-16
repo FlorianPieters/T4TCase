@@ -26,48 +26,49 @@ namespace T4TCase.Controllers
         public IActionResult History()
         {
 
-            var customer = _context.Customer.First(x => x.UserName == User.Identity.Name);
-            var orders = _context.Order.Where(x => x.Customer == customer)
-                .Join(_context.OrderItem, order => order.OrderID, orderitem=> orderitem.OrderID, (order, orderitem) => new { order, orderitem})
-                .Join(_context.Item, x => x.orderitem.ItemID, y => y.ItemID, (x, y) => new { order = x.order, orderitem = x.orderitem, y =y})
-                //.GroupJoin(_context.Item, a => a.orderitem.Join)
-                .Select(order => new { Order = order})
+    
+            var customer = _context.Customer.First(customerID => customerID.UserName == User.Identity.Name);
+            var orders = _context.Order.Where(objOrder => objOrder.Customer == customer)
+                .GroupJoin(_context.OrderItem, order => order.OrderID, orderitem => orderitem.OrderID, (order, orderitem) => new { order, orderitem })
+                //.Join(_context.Item, order => order.orderitem., item => item.ItemID, (x, y) => new { order = x.order, orderitem = x.orderitem, y = y })
+                .Select(order => new { Order = order })
+                .OrderByDescending(o => o.Order.order.Date)       
                 .ToList();
 
+            var items = _context.Item.ToList();
+
+           // orders.Join(_context.Item, a=>a.Order.orderitem., item => item., (order, orderitem) => new { order, orderitem });
+            /*var ordersold = _context.Order.Where(x => x.Customer == customer)
+                .Join(_context.OrderItem, order => order.OrderID, orderitem=> orderitem.OrderID, (order, orderitem) => new { order, orderitem})
+                .Join(_context.Item, x => x.orderitem.ItemID, item => item.ItemID, (x, y) => new { order = x.order, orderitem = x.orderitem, y = y})
+                //.GroupJoin(_context.Item, a => a.orderitem.Join)
+               // .Select(order => new { Order = order})
+                .ToList();*/
+          
             var OrderHistory = new List<OrderListViewModel>();
            
 
             foreach (var order in orders)
-            {
-
-                var ItemList = new List<ItemViewModel>();
+            { 
+                var itemList = new List<ItemViewModel>();
                 foreach (var item in order.Order.order.OrderItems)
                 {
-                    
-                    
                     ItemViewModel vm = new ItemViewModel { ItemID = item.ItemID, Name = item.Item.Name,
-                                        Description = item.Item.Description, Price = item.Item.Price, Aantal = item.Amount };
-                    ItemList.Add(vm);
+                    Description = item.Item.Description, Price = item.Item.Price, Aantal = item.Amount };
+                    itemList.Add(vm);
+                 }
 
-                }
-
-                var Ordervm = new OrderListViewModel
+                var OrderVM = new OrderListViewModel
                 {
-                    itemvms = ItemList,
-                    description = order.Order.order.Description,
-                    totalprice = order.Order.order.TotalPrice,
-                    date = order.Order.order.Date
+                    Itemvms = itemList,
+                    Description = order.Order.order.Description,
+                    TotalPrice = order.Order.order.TotalPrice,
+                    Date = order.Order.order.Date
                 };
                 
-                OrderHistory.Add(Ordervm);
+                OrderHistory.Add(OrderVM);
               //  ItemList.Clear();
             }
-
-
-
-
-    
-
             return View(OrderHistory);
         }
     }

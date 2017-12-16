@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,21 +10,52 @@ namespace T4TCase.Data
 {
     public class DBInitialize
     {
-
-        
-        public static  void Initialize(DatabaseContext context, UserManager<User> userManager)
+        public static async Task<bool> SetUsers(DatabaseContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            
+            await userManager.CreateAsync(new User { UserName = "thomas" }, "Tho*123");
+            await userManager.CreateAsync(new User { UserName = "sven" }, "Sven*123");
+            var florian = await userManager.CreateAsync(new User { UserName = "florian" }, "Flo*123");
+            if (florian.Succeeded)
+            {
+                await roleManager.CreateAsync(new IdentityRole { Name = "Member" });
+                var asmin = await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
+                if (asmin.Succeeded)
+                {
+                    var flo = context.User.First(x => x.UserName == "florian");
+                    var tho = context.User.First(x => x.UserName == "thomas");
+                    var sven = context.User.First(x => x.UserName == "sven");
+
+                    await userManager.AddToRoleAsync(tho, "Member");
+                    await userManager.AddToRoleAsync(sven, "Member");
+                    var created = await userManager.AddToRoleAsync(flo, "Admin");
+                    if (created.Succeeded)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static  void Initialize(DatabaseContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        {            
             context.Database.EnsureCreated();
 
             if (context.Customer.Any() && context.Item.Any() && context.User.Any())
             {
                 return;
             }
-
-            userManager.CreateAsync(new User { UserName = "florian" }, "Flo*123");
-            userManager.CreateAsync(new User { UserName = "thomas" }, "Tho*123");
-            userManager.CreateAsync(new User { UserName = "sven" }, "Sven*123");
 
             context.Customer.AddRange(
                 new Customer { UserName = "florian", LastName = "Pieters", FirstName = "Florian", Age = 25, Email = "florian.pieters@hotmail.com", PhoneNumer = "0479/56.88.12", Address = "Ringlaan 89 Bus 5", City = "2610 WILRIJK" },
@@ -37,7 +69,10 @@ namespace T4TCase.Data
                 new Item { Name = "Broodje Kaashesp", Description = "Broodje met kaas en hesp", Price = 2.5m },
                 new Item { Name = "Broodje Martino", Description = "Broodje met preparé, augurken, ajuin en martino saus", Price = 2.5m }
                 );
+           var  usersCreated = SetUsers(context , userManager, roleManager);
             
         }
+
+          
     }
 }

@@ -6,6 +6,9 @@ using T4TCase.Model;
 using T4TCase.Data;
 using T4TCase.ViewModel;
 
+using MailKit.Net.Smtp;
+using MimeKit;
+
 namespace T4TCase.Method
 {
     public class Functions
@@ -33,25 +36,25 @@ namespace T4TCase.Method
         }
         public static void CompareOrder(DatabaseContext context,Order a, OrderViewModel b)
         {
-            decimal TotalPrice = 0;
-            foreach (var item in b.itemvms)
+            decimal totalPrice = 0;
+            foreach (var item in b.Itemvms)
             {
                 if (item.Aantal > 0)
                 {
-                    decimal Price = item.Price;
-                    Price = Price * item.Aantal;
-                    TotalPrice += Price;
+                    decimal price = item.Price;
+                    price = price * item.Aantal;
+                    totalPrice += price;
 
                 }
             }
-            if (a.Description != b.description || a.TotalPrice!=b.totalprice)
+            if (a.Description != b.Description || a.TotalPrice!=b.TotalPrice)
             {
-                a.Description = b.description;
-                a.TotalPrice = TotalPrice;
+                a.Description = b.Description;
+                a.TotalPrice = totalPrice;
                 context.SaveChanges();
             }
 
-            foreach (var item in b.itemvms)
+            foreach (var item in b.Itemvms)
             {
                 if (item.Aantal > 0)
                 {
@@ -78,5 +81,48 @@ namespace T4TCase.Method
             context.SaveChanges();
 
         }
+        public static void SendMail(string Email,string Subject, string Message )
+        {
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("t4tcase@gmail.com"));
+            message.To.Add(new MailboxAddress(Email));
+            message.Subject = Subject;
+            message.Body = new TextPart("html")
+            {
+                Text = Message
+            };
+            using (var client = new SmtpClient())
+            {
+
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("t4tcase@gmail.com", "t4tcase123");
+                client.Send(message);
+
+                client.Disconnect(true);
+
+            }
+
+
+
+         /*   try
+            {
+                using (SmtpClient smtpClient = new SmtpClient())
+                {
+
+               
+
+                    smtpClient.Connect("smtp.gmail.com", 587, false);
+                    smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
+                    smtpClient.Authenticate("t4tcase@gmail.com", "t4tcase123");
+                    smtpClient.Send(message);
+                    smtpClient.Disconnect(true);
+                }
+            }
+
+            catch { }*/
+        }
     }
+    
 }

@@ -15,7 +15,7 @@ namespace T4TCase.Data
             public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
-    {
+        {
         builder.Entity<Customer>().ToTable("Customer");
         builder.Entity<Item>().ToTable("Item");
         builder.Entity<OrderItem>().ToTable("OrderItem");

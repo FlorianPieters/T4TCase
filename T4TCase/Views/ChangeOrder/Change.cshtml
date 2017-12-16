@@ -7,8 +7,8 @@
 @using (Html.BeginForm("Change", "ChangeOrder"))
 {
     <div>
-        <table>
-            <thead>
+        <table class="table table-striped">
+            <thead class="thead-inverse">
                 <tr>
 
                     <th>Naam</th>
@@ -17,21 +17,21 @@
                     <th>Prijs</th>
                 </tr>
             </thead>
-            <tbody>
-                @for (int i = 0; i < Model.itemvms.Count(); i++)
+            <tbody class="thead-inverse">
+                @for (int i = 0; i < Model.Itemvms.Count(); i++)
                 {
-                    @Html.HiddenFor(model => Model.itemvms[i].ItemID)
-                    @Html.HiddenFor(model => Model.itemvms[i].Name)
-                    @Html.HiddenFor(model => Model.itemvms[i].Description)
-                    @Html.HiddenFor(model => Model.itemvms[i].Price)
+                    @Html.HiddenFor(model => Model.Itemvms[i].ItemID)
+                    @Html.HiddenFor(model => Model.Itemvms[i].Name)
+                    @Html.HiddenFor(model => Model.Itemvms[i].Description)
+                    @Html.HiddenFor(model => Model.Itemvms[i].Price)
                     <tr>
-                        <td>@Html.DisplayFor(model => Model.itemvms[i].Name)</td>
-                        <td>@Html.DisplayFor(model => Model.itemvms[i].Description)</td>
+                        <td>@Html.DisplayFor(model => Model.Itemvms[i].Name)</td>
+                        <td>@Html.DisplayFor(model => Model.Itemvms[i].Description)</td>
                         <td>
-                            @Html.TextBoxFor(model => Model.itemvms[i].Aantal)
-                        @Html.ValidationMessageFor(model => Model.itemvms[i].Aantal)
+                            @Html.TextBoxFor(model => Model.Itemvms[i].Aantal)
+                        @Html.ValidationMessageFor(model => Model.Itemvms[i].Aantal)
                     </td>
-                    <td> @Html.DisplayFor(model => Model.itemvms[i].Price) </td>
+                    <td> @Html.DisplayFor(model => Model.Itemvms[i].Price) </td>
                 </tr>
 
                     // TotalPrice = @Html.Raw(Json.ToString(Model.itemvms[i].Aantal));
@@ -40,52 +40,69 @@
 
             </tbody>
         </table>
-        <div>
-            @Html.HiddenFor(model => Model.date)
-            @Html.HiddenFor(model => Model.totalprice)
-            <div>
-                <label asp-for="description"></label>
-                <input asp-for="description" />
-                <span asp-validation-for="description"></span>
-            </div>
-            <div>
-                <label asp-for="customer.LastName"></label>
-                <input asp-for="customer.LastName" />
-                <span asp-validation-for="customer.LastName"></span>
-            </div>
-            <div>
-                <label asp-for="customer.FirstName"></label>
-                <input asp-for="customer.FirstName" />
-                <span asp-validation-for="customer.FirstName"></span>
-            </div>
-            <div>
-                <label asp-for="customer.Age"></label>
-                <input asp-for="customer.Age" />
-                <span asp-validation-for="customer.Age"></span>
-            </div>
-            <div>
-                <label asp-for="customer.Email"></label>
-                <input asp-for="customer.Email" />
-                <span asp-validation-for="customer.Email"></span>
-            </div>
-            <div>
-                <label asp-for="customer.PhoneNumer"></label>
-                <input asp-for="customer.PhoneNumer" />
-                <span asp-validation-for="customer.PhoneNumer"></span>
-            </div>
-            <div>
-                <label asp-for="customer.Address"></label>
-                <input asp-for="customer.Address" />
-                <span asp-validation-for="customer.Address"></span>
-            </div>
-            <div>
-                <label asp-for="customer.City"></label>
-                <input asp-for="customer.City" />
-                <span asp-validation-for="customer.City"></span>
+        
+            @Html.HiddenFor(model => Model.Date)
+            @*@Html.HiddenFor(model => Model.Totalprice)*@
+            <div class="t4tFormContentLeft">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Description"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Description" />
+                    </div>
+                    <span asp-validation-for="Description"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.LastName"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.LastName" />
+                    </div>
+                    <span asp-validation-for="Customer.LastName"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.FirstName"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.FirstName" />
+                    </div>
+                    <span asp-validation-for="Customer.FirstName"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.Age"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.Age" />
+                    </div>
+                    <span asp-validation-for="Customer.Age"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.Email"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.Email" />
+                    </div>
+                    <span asp-validation-for="Customer.Email"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.PhoneNumer"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.PhoneNumer" />
+                    </div>
+                    <span asp-validation-for="Customer.PhoneNumer"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.Address"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.Address" />
+                    </div>
+                    <span asp-validation-for="Customer.Address"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" asp-for="Customer.City"></label>
+                    <div class="col-10">
+                        <input class="form-control" asp-for="Customer.City" />
+                    </div>
+                    <span asp-validation-for="Customer.City"></span>
+                </div>
             </div>
         </div>
-    </div>
-    // <p>Total price is @TotalPrice</p>
+    //<p>Total price is @Model.TotalPrice</p>
     // Model.totalprice = TotalPrice;
 
 

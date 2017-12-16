@@ -39,13 +39,16 @@ namespace T4TCase
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(
+                options => { options.Cookies.ApplicationCookie.LoginPath = "/Login/Login";
+                    options.Cookies.ApplicationCookie.AccessDeniedPath = "/Login/Login";
+                })
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context, UserManager<User> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -69,7 +72,7 @@ namespace T4TCase
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
-            DBInitialize.Initialize(context,userManager);
+            DBInitialize.Initialize(context, userManager, roleManager);
         }
     }
 }

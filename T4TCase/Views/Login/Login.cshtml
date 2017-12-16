@@ -1,28 +1,35 @@
 @using T4TCase.ViewModel
 @model LoginViewModel
 
-
 <h1>Login</h1>
 <form method="post" asp-controller="Login" asp-action="Login">
-    <div>
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+    <div class="t4tFormContentLeft">
+        <div class="form-group row">
+            <label class="col-2 col-form-label" asp-for="UserName"></label>
+            <div class="col-10">
+                <input class="form-control" asp-for="UserName" />
+            </div>
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label" asp-for="Password"></label>
+            <div class="col-10">
+                <input class="form-control" asp-for="Password" />
+            </div>
+            <span asp-validation-for="Password"></span>
+        </div>
     </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="RememberMe"></label>
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <p><input type="submit" value="Login" /></p>
-        <p><a asp-action="Register">Register</a></p>
-        <p><a asp-controller="Order" asp-action="Order">Skip loggin in</a></p>
-    </div>
+        <div class="form-check">
+            <label class="form-check-label" asp-for="RememberMe">
+                <input asp-for="RememberMe" type="checkbox" class="form-check-input">
+                Remember me
+            </label>
+        </div>
+        <div class="button-group" >
+                <p><input class="btn btn-primary pull-left" type="submit" value="Login" /></p>
+                <p><a class="btn btn-primary pull-left t4tFormContentLeft" asp-action="Register">Register</a></p>
+                <p><a class="btn btn-primary t4tFormContentLeft" asp-controller="Order" asp-action="Order">Skip loggin in</a></p>
+        </div>
 </form>
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 

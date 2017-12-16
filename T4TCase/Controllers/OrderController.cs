@@ -30,71 +30,71 @@ namespace T4TCase.Controllers
         [HttpGet]
         public IActionResult Order()
         {
-            var Items = _context.Item.ToList();
-            var ItemList = new List<ItemViewModel>();
+            var items = _context.Item.ToList();
+            var itemList = new List<ItemViewModel>();
 
-            foreach (var Item in Items)
+            foreach (var item in items)
             {
 
-                ItemViewModel vm = new ItemViewModel {ItemID = Item.ItemID, Name = Item.Name, Description = Item.Description, Price = Item.Price};
-                ItemList.Add(vm);
+                ItemViewModel vm = new ItemViewModel {ItemID = item.ItemID, Name = item.Name, Description = item.Description, Price = item.Price};
+                itemList.Add(vm);
 
             }
-            var Ordervm = new OrderViewModel();
+            var orderVM = new OrderViewModel();
             if (User.Identity.IsAuthenticated)
             {
                 var user =_context.Customer.First(x => x.UserName == User.Identity.Name);                
-                Ordervm = new OrderViewModel { itemvms = ItemList, customer = user };
+                orderVM = new OrderViewModel { Itemvms = itemList, Customer = user };
             }
             else
             {
-                Ordervm = new OrderViewModel { itemvms = ItemList };
+                orderVM = new OrderViewModel { Itemvms = itemList };
             }
 
-            return View(Ordervm);
+            return View(orderVM);
         }
 
         [HttpPost]
-        public ActionResult Confirm(OrderViewModel Ordervm)
+        public ActionResult Confirm(OrderViewModel orderVM)
         {
-            int OrderItemAmount = 0;
-            foreach (var item in Ordervm.itemvms)
+            int orderItemAmount = 0;
+            foreach (var item in orderVM.Itemvms)
             {
-                OrderItemAmount += item.Aantal;
+                orderItemAmount += item.Aantal;
             }
-            if (OrderItemAmount <= 0)
+            if (orderItemAmount <= 0)
             {
                 return RedirectToAction("Order", "Order");
           
-            ModelState.AddModelError("", "Wrong user information.");
+                ModelState.AddModelError("", "Wrong user information.");
             }
             var customer = new Customer();
             if (User.Identity.IsAuthenticated)
             {
                 customer = _context.Customer.First(x => x.UserName == User.Identity.Name);
-                Functions.CompareCustomer(_context, customer, Ordervm.customer);
+                Functions.CompareCustomer(_context, customer, orderVM.Customer);
             }
             else
             {
-                customer = Ordervm.customer;
+                customer = orderVM.Customer;
             }
 
-            decimal TotalPrice = 0;
-            foreach (var item in Ordervm.itemvms)
+            decimal totalPrice = 0;
+            foreach (var item in orderVM.Itemvms)
             {
                 if (item.Aantal > 0)
                 {
-                    decimal Price = item.Price;
-                    Price = Price * item.Aantal;
-                    TotalPrice += Price;
+                    decimal price = item.Price;
+                    price = price * item.Aantal;
+                    totalPrice += price;
                 }
             }
 
-            var order = new Order { Customer = customer, Date = System.DateTime.Now, Description = Ordervm.description, TotalPrice = TotalPrice};
+            var order = new Order { Customer = customer, Date = System.DateTime.Now, Description = orderVM.Description, TotalPrice = totalPrice};
             _context.Order.Add(order);
             _context.SaveChanges();
 
-            foreach (var item in Ordervm.itemvms)
+            foreach (var item in orderVM.Itemvms)
             {
                 if (item.Aantal > 0)
                 {
@@ -103,9 +103,9 @@ namespace T4TCase.Controllers
                 }
             }
             _context.SaveChanges();
-
+           // Functions.SendMail(customer.Email, "Order Comfirmed", "We have recived your order. if you want to change it you have 10 to 15 minutes");
             
-            return View(Ordervm);
+            return View(orderVM);
         }
 
     }
