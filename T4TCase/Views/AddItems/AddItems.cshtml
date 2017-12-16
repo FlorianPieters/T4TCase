@@ -1,0 +1,68 @@
+﻿@using T4TCase.ViewModel
+@model AddItemViewModel
+
+<h1>Manage your items</h1>
+
+@using (Html.BeginForm("AddItems", "AddItems"))
+{
+    <div>
+        <table class="table table-striped">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Naam</th>
+                    <th>Beschrijving</th>
+                    <th>Prijs</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody class="thead-inverse">
+                @for (int i = 0; i < Model.ExistingItems.Count; i++)
+                {
+
+                    
+                    <tr>
+                        <td>@Html.TextBoxFor(model => Model.ExistingItems[i].Name)</td>
+                        @Html.ValidationMessageFor(model => Model.ExistingItems[i].Name)
+                        <td>@Html.TextBoxFor(model => Model.ExistingItems[i].Description)</td>
+                        @Html.ValidationMessageFor(model => Model.ExistingItems[i].Description)
+                        <td> @Html.TextBoxFor(model => Model.ExistingItems[i].Price) </td>
+                        @Html.ValidationMessageFor(model => Model.ExistingItems[i].Price)
+                        <td><button type="submit" class="btn btn-primary" name="edit" value=@Model.ExistingItems[i].ItemID>Edit</button></td>
+                        <td><button type="submit" class="btn btn-primary" name="delete" value=@Model.ExistingItems[i].ItemID>Delete</button></td>
+                     
+                    </tr>
+                    @Html.HiddenFor(model => Model.ExistingItems[i].ItemID)
+                    @Html.HiddenFor(model => Model.ExistingItems[i].Name)
+                    @Html.HiddenFor(model => Model.ExistingItems[i].Description)
+                    @Html.HiddenFor(model => Model.ExistingItems[i].Price)
+                }
+            </tbody>
+        </table>        
+        <div class="t4tFormContentLeft">
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="CreateItem.Name"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="CreateItem.Name" />
+                </div>
+                <span asp-validation-for="CreateItem.Name"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="CreateItem.Description"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="CreateItem.Description" />
+                </div>
+                <span asp-validation-for="CreateItem.Description"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="CreateItem.Price"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="CreateItem.Price" />
+                </div>
+                <span asp-validation-for="CreateItem.Price"></span>
+            </div>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" name="add" value="Add" />
+
+}

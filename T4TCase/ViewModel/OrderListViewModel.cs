@@ -7,10 +7,10 @@ namespace T4TCase.ViewModel
 {
     public class OrderListViewModel
     {
-        public List<ItemViewModel> itemvms { get; set; }
+        public List<ItemViewModel> Itemvms { get; set; }
         
-        public string description { get; set; }
-        public DateTime date { get; set; }
-        public decimal totalprice { get; set; }
+        public string Description { get; set; }
+        public DateTime Date { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

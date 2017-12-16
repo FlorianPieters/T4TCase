@@ -74,8 +74,14 @@ namespace T4TCase.Controllers
                 _context.SaveChanges();
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Order", "Order");
+                    
+                     var role = await _userManager.AddToRoleAsync(user, "Member");
+                    if (role.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, false);
+                        return RedirectToAction("Order", "Order");
+                    }
+
                 }
                 else
                 {

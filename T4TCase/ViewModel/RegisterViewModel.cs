@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace T4TCase.ViewModel
 {
     public class RegisterViewModel

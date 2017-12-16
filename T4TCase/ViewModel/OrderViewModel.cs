@@ -8,11 +8,10 @@ namespace T4TCase.ViewModel
 {
     public class OrderViewModel
     {
-        public List<ItemViewModel> itemvms { get; set; }
-        public Customer customer { get; set; }
-        public string description { get; set; }
-        public DateTime date { get; set; }
-        public decimal totalprice {get;set;}
-        
+        public List<ItemViewModel> Itemvms { get; set; }
+        public Customer Customer { get; set; }
+        public string Description { get; set; }
+        public DateTime Date { get; set; }
+        public decimal TotalPrice { get; set; }        
     }
 }

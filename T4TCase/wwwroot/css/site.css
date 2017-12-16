@@ -35,3 +35,13 @@ textarea {
         display: none;
     }
 }
+.t4tFormContentLeft {
+    margin-left: 15px;
+}
+#t4tOrderHistoryContent{
+    font-size: large;
+    margin-top: 25px;
+    margin-bottom: 40px;
+    
+    
+}
