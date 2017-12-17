@@ -17,7 +17,7 @@ namespace T4TCase.Model
         [Required, StringLength(50)]
         public string FirstName { get; set; }
 
-        [Required, Range(0, 100)]
+        [Required, Range(10, 100)]
         public int Age { get; set; }
 
         [Required, EmailAddress, StringLength(50)]
