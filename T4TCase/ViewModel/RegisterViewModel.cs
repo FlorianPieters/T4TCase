@@ -25,7 +25,7 @@ namespace T4TCase.ViewModel
         [Required, StringLength(50), Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required, Range(0, 100), Display(Name = "Age")]
+        [Required, Range(10, 100), Display(Name = "Age")]
         public int Age { get; set; }
 
         [Required, Phone, StringLength(10), Display(Name = "Phone number")]
