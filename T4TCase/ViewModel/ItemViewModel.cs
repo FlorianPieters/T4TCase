@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using T4TCase.Model;
-
-namespace T4TCase.ViewModel
+﻿namespace T4TCase.ViewModel
 {
+    //VM for 1 OrderItem --> create a list of this in OrderVM/OrderListVM
     public class ItemViewModel
     {
         public int ItemID { get; set; }

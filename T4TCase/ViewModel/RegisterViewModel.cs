@@ -3,12 +3,13 @@
 
 namespace T4TCase.ViewModel
 {
+    //VM for RegisterView
     public class RegisterViewModel
     {
-        [Required, MaxLength(256), Display(Name = "Username")]
-        public string UserName {get; set;}
+        [Required, StringLength(50), Display(Name = "Username")]
+        public string UserName { get; set; }
 
-        [Required, EmailAddress, MaxLength(256), Display(Name = "Email adress")]
+        [Required, EmailAddress, StringLength(50), Display(Name = "Email adress")]
         public string Email { get; set; }
 
         [Required, MinLength(6), MaxLength(50), Display(Name = "Password"), DataType(DataType.Password)]
@@ -18,21 +19,22 @@ namespace T4TCase.ViewModel
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-
-        [Required]
+        [Required, StringLength(50), Display(Name = "Last name")]
         public string LastName { get; set; }
-        [Required]
+
+        [Required, StringLength(50), Display(Name = "First name")]
         public string FirstName { get; set; }
 
+        [Required, Range(0, 100), Display(Name = "Age")]
         public int Age { get; set; }
-        [Required]
+
+        [Required, Phone, StringLength(10), Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
+
+        [Required, StringLength(50), Display(Name = "Address")]
         public string Address { get; set; }
-        [Required]
-        [Phone]
-        public string PhoneNumer { get; set; }
-        [Required]
+
+        [Required, StringLength(50), Display(Name = "Postal code - City")]
         public string City { get; set; }
     }
-
-
 }

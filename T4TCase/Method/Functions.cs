@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using T4TCase.Model;
-using T4TCase.Data;
-using T4TCase.ViewModel;
-
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MimeKit;
+using System.Linq;
+using T4TCase.Data;
+using T4TCase.Model;
+using T4TCase.ViewModel;
 
 namespace T4TCase.Method
 {
@@ -15,11 +11,10 @@ namespace T4TCase.Method
     {
         public static void CompareCustomer(DatabaseContext context, Customer a, Customer b)
         {
-            
             if (a.LastName != b.LastName
                     || a.FirstName != b.FirstName
                     || a.Email != b.Email
-                    || a.PhoneNumer != b.PhoneNumer
+                    || a.PhoneNumber != b.PhoneNumber
                     || a.Age != b.Age
                     || a.Address != b.Address
                     || a.City != b.City)
@@ -27,14 +22,16 @@ namespace T4TCase.Method
                 a.LastName = b.LastName;
                 a.FirstName = b.FirstName;
                 a.Email = b.Email;
-                a.PhoneNumer = b.PhoneNumer;
+                a.PhoneNumber = b.PhoneNumber;
                 a.Age = b.Age;
                 a.Address = b.Address;
                 a.City = b.City;
                 context.SaveChanges();
             }
         }
-        public static void CompareOrder(DatabaseContext context,Order a, OrderViewModel b)
+
+
+        public static void CompareOrder(DatabaseContext context, Order a, OrderViewModel b)
         {
             decimal totalPrice = 0;
             foreach (var item in b.Itemvms)
@@ -44,10 +41,10 @@ namespace T4TCase.Method
                     decimal price = item.Price;
                     price = price * item.Aantal;
                     totalPrice += price;
-
                 }
             }
-            if (a.Description != b.Description || a.TotalPrice!=b.TotalPrice)
+
+            if (a.Description != b.Description || a.TotalPrice != b.TotalPrice)
             {
                 a.Description = b.Description;
                 a.TotalPrice = totalPrice;
@@ -56,73 +53,44 @@ namespace T4TCase.Method
 
             foreach (var item in b.Itemvms)
             {
-                if (item.Aantal > 0)
+                if (context.OrderItem.Any(x => x.OrderID == a.OrderID && x.ItemID == item.ItemID))
                 {
-                   // var test = a.OrderID;
-                   // var i = context.OrderItem.Any(x=>x.OrderID == a.OrderID && x.ItemID == item.ItemID);
-                    if (context.OrderItem.Any(x => x.OrderID == a.OrderID && x.ItemID == item.ItemID))
+                    var i = context.OrderItem.First(x => x.OrderID == a.OrderID && x.ItemID == item.ItemID);
+                    if (i.Amount != item.Aantal)
                     {
-                        var i = context.OrderItem.First(x => x.OrderID == a.OrderID && x.ItemID == item.ItemID);
-                        if (i.Amount != item.Aantal)
-                        {
-                            i.Amount = item.Aantal;
-                        }
-
-                        //context.SaveChanges();
-                    }
-                    else
-                    {
-                        context.OrderItem.Add(new OrderItem { OrderID = a.OrderID, ItemID = item.ItemID, Amount = item.Aantal });
+                        if (item.Aantal == 0) context.OrderItem.Remove(i);
+                        else i.Amount = item.Aantal;
                     }
                 }
-                
+                else
+                {
+                    if (item.Aantal >= 0) context.OrderItem.Add(new OrderItem { OrderID = a.OrderID, ItemID = item.ItemID, Amount = item.Aantal });
+                }
             }
-
             context.SaveChanges();
-
         }
-        public static void SendMail(string Email,string Subject, string Message )
-        {
 
+
+        public static void SendMail(string email, string subject, string msg)
+        {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("t4tcase@gmail.com"));
-            message.To.Add(new MailboxAddress(Email));
-            message.Subject = Subject;
+            message.To.Add(new MailboxAddress(email));
+            message.Subject = subject;
             message.Body = new TextPart("html")
             {
-                Text = Message
+                Text = msg
             };
+
             using (var client = new SmtpClient())
             {
-
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
                 client.Connect("smtp.gmail.com", 587, false);
                 client.Authenticate("t4tcase@gmail.com", "t4tcase123");
                 client.Send(message);
 
                 client.Disconnect(true);
-
             }
-
-
-
-         /*   try
-            {
-                using (SmtpClient smtpClient = new SmtpClient())
-                {
-
-               
-
-                    smtpClient.Connect("smtp.gmail.com", 587, false);
-                    smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
-                    smtpClient.Authenticate("t4tcase@gmail.com", "t4tcase123");
-                    smtpClient.Send(message);
-                    smtpClient.Disconnect(true);
-                }
-            }
-
-            catch { }*/
         }
     }
-    
 }
