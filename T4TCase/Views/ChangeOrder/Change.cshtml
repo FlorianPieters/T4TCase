@@ -1,20 +1,17 @@
 ﻿@using T4TCase.ViewModel
 @model OrderViewModel
-@*@{ decimal TotalPrice = 0; }*@
 
-
-<h1>Order Page</h1>
+<h1>Change Order</h1>
 @using (Html.BeginForm("Change", "ChangeOrder"))
 {
     <div>
         <table class="table table-striped">
             <thead class="thead-inverse">
                 <tr>
-
                     <th>Naam</th>
                     <th>Info</th>
                     <th>Aantal</th>
-                    <th>Prijs</th>
+                    <th>€ Prijs</th>
                 </tr>
             </thead>
             <tbody class="thead-inverse">
@@ -29,82 +26,72 @@
                         <td>@Html.DisplayFor(model => Model.Itemvms[i].Description)</td>
                         <td>
                             @Html.TextBoxFor(model => Model.Itemvms[i].Aantal)
-                        @Html.ValidationMessageFor(model => Model.Itemvms[i].Aantal)
-                    </td>
-                    <td> @Html.DisplayFor(model => Model.Itemvms[i].Price) </td>
-                </tr>
-
-                    // TotalPrice = @Html.Raw(Json.ToString(Model.itemvms[i].Aantal));
-
+                            @Html.ValidationMessageFor(model => Model.Itemvms[i].Aantal)
+                        </td>
+                        <td> @Html.DisplayFor(model => Model.Itemvms[i].Price) </td>
+                    </tr>
                 }
-
             </tbody>
         </table>
-        
-            @Html.HiddenFor(model => Model.Date)
-            @*@Html.HiddenFor(model => Model.Totalprice)*@
-            <div class="t4tFormContentLeft">
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Description"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Description" />
-                    </div>
-                    <span asp-validation-for="Description"></span>
+        @Html.HiddenFor(model => Model.Date)
+        <div class="t4tFormContentLeft">
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Description"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Description" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.LastName"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.LastName" />
-                    </div>
-                    <span asp-validation-for="Customer.LastName"></span>
+                <span asp-validation-for="Description"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.LastName"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.LastName" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.FirstName"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.FirstName" />
-                    </div>
-                    <span asp-validation-for="Customer.FirstName"></span>
+                <span asp-validation-for="Customer.LastName"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.FirstName"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.FirstName" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.Age"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.Age" />
-                    </div>
-                    <span asp-validation-for="Customer.Age"></span>
+                <span asp-validation-for="Customer.FirstName"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.Age"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.Age" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.Email"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.Email" />
-                    </div>
-                    <span asp-validation-for="Customer.Email"></span>
+                <span asp-validation-for="Customer.Age"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.Email"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.Email" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.PhoneNumer"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.PhoneNumer" />
-                    </div>
-                    <span asp-validation-for="Customer.PhoneNumer"></span>
+                <span asp-validation-for="Customer.Email"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.PhoneNumber"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.PhoneNumber" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.Address"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.Address" />
-                    </div>
-                    <span asp-validation-for="Customer.Address"></span>
+                <span asp-validation-for="Customer.PhoneNumber"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.Address"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.Address" />
                 </div>
-                <div class="form-group row">
-                    <label class="col-2 col-form-label" asp-for="Customer.City"></label>
-                    <div class="col-10">
-                        <input class="form-control" asp-for="Customer.City" />
-                    </div>
-                    <span asp-validation-for="Customer.City"></span>
+                <span asp-validation-for="Customer.Address"></span>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label" asp-for="Customer.City"></label>
+                <div class="col-10">
+                    <input class="form-control" asp-for="Customer.City" />
                 </div>
+                <span asp-validation-for="Customer.City"></span>
             </div>
         </div>
-    //<p>Total price is @Model.TotalPrice</p>
-    // Model.totalprice = TotalPrice;
-
-
-    <input type="submit" value="Confirm" />
+        <input type="submit" value="Confirm" />
+    </div>
 }

@@ -1,7 +1,6 @@
 ﻿@using T4TCase.ViewModel
 @model RegisterViewModel
 
-
 <h1>Registration</h1>
 <form method="post" asp-controller="Login" asp-action="Register">
     <div class="t4tFormContentLeft">
@@ -55,11 +54,11 @@
             <span asp-validation-for="Age"></span>
         </div>
         <div class="form-group row">
-            <label class="col-2 col-form-label" asp-for="PhoneNumer"></label>
+            <label class="col-2 col-form-label" asp-for="PhoneNumber"></label>
             <div class="col-10">
-                <input class="form-control" asp-for="PhoneNumer" />
+                <input class="form-control" asp-for="PhoneNumber" />
             </div>
-            <span asp-validation-for="PhoneNumer"></span>
+            <span asp-validation-for="PhoneNumber"></span>
         </div>
         <div class="form-group row">
             <label class="col-2 col-form-label" asp-for="Address"></label>
@@ -76,6 +75,6 @@
             <span asp-validation-for="City"></span>
         </div>
     </div>
-            <div><input type="submit" class="btn btn-primary" value="Register" /></div>
+    <div><input type="submit" class="btn btn-primary" value="Register" /></div>
 </form>
 @Html.ValidationSummary(false, "", new { @class = "text-danger" })

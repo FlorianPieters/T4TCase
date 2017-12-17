@@ -2,35 +2,33 @@
 @model List<OrderListViewModel>
 
 <h1>Order history Page</h1>
-        @foreach (var order in Model)
-        {
-            <table class="table table-striped">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th>Naam</th>
-                        <th>Info</th>
-                        <th>Aantal</th>
-                        <th>Prijs</th>
-                    </tr>
-                </thead>
-                <tbody class="thead-inverse">
-                    @foreach (var item in order.Itemvms)
-                    {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Description</td>
-                            <td>@item.Aantal</td>
-                            <td>@item.Price</td>
-                        </tr>
-
-
-                    }
-                </tbody>
-            </table>
+@foreach (var order in Model)
+{
+    <table class="table table-striped">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Naam</th>
+                <th>Info</th>
+                <th>Aantal</th>
+                <th>€ Prijs</th>
+            </tr>
+        </thead>
+        <tbody class="thead-inverse">
+            @foreach (var item in order.Itemvms)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Aantal</td>
+                    <td>@item.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
             <div id="t4tOrderHistoryContent">
                 <p>Description: @order.Description</p>
                 <p>Date: @order.Date</p>
                 <p>Total price: @order.TotalPrice</p>
             </div>
             <hr>
-        }
+}

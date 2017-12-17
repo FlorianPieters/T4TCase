@@ -1,55 +1,41 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using T4TCase.ViewModel;
-using T4TCase.Model;
 using T4TCase.Data;
-using Microsoft.AspNetCore.Identity;
 using T4TCase.Method;
-
-
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using T4TCase.Model;
+using T4TCase.ViewModel;
 
 namespace T4TCase.Controllers
 {
     public class OrderController : Controller
     {
         private readonly DatabaseContext _context;
-       // private readonly UserManager<User> _userManager;
 
         public OrderController(DatabaseContext context)
         {
             _context = context;
-           // _userManager = userManager;
         }
 
-        // GET: /<controller>/
         [HttpGet]
         public IActionResult Order()
         {
+            //create OrderViewModel with all items and Customer if logged in
             var items = _context.Item.ToList();
             var itemList = new List<ItemViewModel>();
 
             foreach (var item in items)
             {
-
-                ItemViewModel vm = new ItemViewModel {ItemID = item.ItemID, Name = item.Name, Description = item.Description, Price = item.Price};
+                ItemViewModel vm = new ItemViewModel { ItemID = item.ItemID, Name = item.Name, Description = item.Description, Price = item.Price };
                 itemList.Add(vm);
-
             }
             var orderVM = new OrderViewModel();
             if (User.Identity.IsAuthenticated)
             {
-                var user =_context.Customer.First(x => x.UserName == User.Identity.Name);                
+                var user = _context.Customer.First(x => x.UserName == User.Identity.Name);
                 orderVM = new OrderViewModel { Itemvms = itemList, Customer = user };
             }
-            else
-            {
-                orderVM = new OrderViewModel { Itemvms = itemList };
-            }
+            else orderVM = new OrderViewModel { Itemvms = itemList };
 
             return View(orderVM);
         }
@@ -57,29 +43,26 @@ namespace T4TCase.Controllers
         [HttpPost]
         public ActionResult Confirm(OrderViewModel orderVM)
         {
+            //check if the Customer orderd something
             int orderItemAmount = 0;
             foreach (var item in orderVM.Itemvms)
             {
                 orderItemAmount += item.Aantal;
             }
-            if (orderItemAmount <= 0)
-            {
-                return RedirectToAction("Order", "Order");
-          
-                ModelState.AddModelError("", "Wrong user information.");
-            }
+            if (orderItemAmount <= 0) return RedirectToAction("Order", "Order");
+
+            //compare Customer if logged in and compare
             var customer = new Customer();
             if (User.Identity.IsAuthenticated)
             {
                 customer = _context.Customer.First(x => x.UserName == User.Identity.Name);
                 Functions.CompareCustomer(_context, customer, orderVM.Customer);
             }
-            else
-            {
-                customer = orderVM.Customer;
-            }
+            else customer = orderVM.Customer;
 
+            //count price so you can add the Order in the db
             decimal totalPrice = 0;
+
             foreach (var item in orderVM.Itemvms)
             {
                 if (item.Aantal > 0)
@@ -90,23 +73,25 @@ namespace T4TCase.Controllers
                 }
             }
 
-            var order = new Order { Customer = customer, Date = System.DateTime.Now, Description = orderVM.Description, TotalPrice = totalPrice};
+            //add Order to db
+            var order = new Order { Customer = customer, Date = System.DateTime.Now, Description = orderVM.Description, TotalPrice = totalPrice };
             _context.Order.Add(order);
             _context.SaveChanges();
 
+            //add OrderItems with info from the Order
             foreach (var item in orderVM.Itemvms)
             {
                 if (item.Aantal > 0)
                 {
-                    var test = order.OrderID;
                     _context.OrderItem.Add(new OrderItem { OrderID = order.OrderID, ItemID = item.ItemID, Amount = item.Aantal });
                 }
             }
             _context.SaveChanges();
-           // Functions.SendMail(customer.Email, "Order Comfirmed", "We have recived your order. if you want to change it you have 10 to 15 minutes");
-            
+
+            //send mail
+            Functions.SendMail(customer.Email, "Order Comfirmed", "We have recived your order. if you want to change it you have 10 to 15 minutes");
+
             return View(orderVM);
         }
-
     }
 }
