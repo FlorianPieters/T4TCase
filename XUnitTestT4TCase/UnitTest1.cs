@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-using System;
-using Xunit;
-using T4TCase.Controllers;
-using T4TCase.Data;
-using T4TCase.Model;
-=======
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,19 +5,11 @@ using System.Security.Claims;
 using T4TCase.Controllers;
 using T4TCase.Data;
 using Xunit;
->>>>>>> FlorianDev
 
 namespace XUnitTestT4TCase
 {
     public class UnitTest1
     {
-<<<<<<< HEAD
-        
-        [Fact]
-        public void Test1()
-        {
-            //var controller = new OrderController();
-=======
         [Fact]
         public void Values_Get_All()
         {
@@ -53,7 +38,6 @@ namespace XUnitTestT4TCase
 
             //check if the return type is a viewresult
             Assert.IsType<ViewResult>(result);
->>>>>>> FlorianDev
         }
     }
 }
