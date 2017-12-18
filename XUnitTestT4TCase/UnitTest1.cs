@@ -11,7 +11,7 @@ namespace XUnitTestT4TCase
     public class UnitTest1
     {
         [Fact]
-        public void Values_Get_All()
+        public void Get_Controller_Returntype()
         {
             //set options for dbcontext
             var dbOption = new DbContextOptionsBuilder<DatabaseContext>()
